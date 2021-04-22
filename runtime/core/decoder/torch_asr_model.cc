@@ -31,11 +31,15 @@ void TorchAsrModel::Read(const std::string& model_path, const int num_threads) {
   CHECK_EQ(o3.isInt(), true);
   sos_ = o3.toInt();
   torch::jit::IValue o4 = module_->run_method("eos_symbol");
-  CHECK_EQ(o4.isInt(), true);
   eos_ = o4.toInt();
+  CHECK_EQ(o4.isInt(), true);
+  torch::jit::IValue o5 = module_->run_method("reverse_num_blocks");
+  reverse_num_blocks_ = o5.toInt();
+  CHECK_EQ(o5.isInt(), true);
+  eos_ = o5.toInt();
   LOG(INFO) << "torch model info subsampling_rate " << subsampling_rate_
             << " right context " << right_context_ << " sos " << sos_ << " eos "
-            << eos_;
+            << eos_ << " reverse_num_blocks " << reverse_num_blocks_;
 }
 
 }  // namespace wenet
