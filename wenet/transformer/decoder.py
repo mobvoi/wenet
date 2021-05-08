@@ -70,7 +70,6 @@ class TransformerDecoder(torch.nn.Module):
         self.use_output_layer = use_output_layer
         self.output_layer = torch.nn.Linear(attention_dim, vocab_size)
         self.num_blocks = num_blocks
-
         self.decoders = torch.nn.ModuleList([
             DecoderLayer(
                 attention_dim,
@@ -200,7 +199,6 @@ class TransformerDecoder(torch.nn.Module):
         if self.use_output_layer:
             y = torch.log_softmax(self.output_layer(y), dim=-1)
         return y, new_cache
-
 
 class BiTransformerDecoder(torch.nn.Module):
     """Base class of Transfomer decoder module.
